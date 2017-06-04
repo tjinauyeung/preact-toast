@@ -37,7 +37,7 @@ class Toast extends Component {
     this.timer = setInterval(() => this.setState({pulse: !this.state.pulse}), interval);
   }
 
-  handleClick() { 
+  handleClick() {
     this.setState({
       showToast: !this.state.showToast
     });
@@ -53,9 +53,9 @@ class Toast extends Component {
   }
 
   render() {
-    const { 
+    const {
       icon,
-      fontSize, 
+      fontSize,
       position,
       bgColor,
       borderRadius,
@@ -70,7 +70,7 @@ class Toast extends Component {
         <ToastWrapper
           position={position}>
           { icon
-            ? <ToastIcon 
+            ? <ToastIcon
               {...this.props}
               src={icon}
               pulse={this.state.pulse}
