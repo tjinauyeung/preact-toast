@@ -5,10 +5,9 @@ import { Wrapper, ToastWrapper, ToastIcon, ToastMessage } from './Toast.styled';
 // helper function
 function isEmpty(arr) {
   return arr === undefined || arr.length == 0;
-};
+}
 
 class Toast extends Component {
-
   constructor(props) {
     super(props);
     this.timer = [];
@@ -32,25 +31,25 @@ class Toast extends Component {
     const delay = parseInt(this.props.delay);
     const duration = parseInt(this.props.duration);
     // show message after delay
-    this.timer[0] = setTimeout(() => this.setState({showToast: true}), delay);
+    this.timer[0] = setTimeout(() => this.setState({ showToast: true }), delay);
     // hide message after timeout
-    this.timer[1] = setTimeout(() => this.setState({showToast: false}), duration + delay);
+    this.timer[1] = setTimeout(() => this.setState({ showToast: false }), duration + delay);
   }
 
   initPassiveNotification() {
     const interval = parseInt(this.props.pulseInterval) / 2;
     // set pulse animation
-    this.timer[0] = setInterval(() => this.setState({pulse: !this.state.pulse}), interval);
+    this.timer[0] = setInterval(() => this.setState({ pulse: !this.state.pulse }), interval);
   }
 
   handleClick() {
-    this.setState({
-      showToast: !this.state.showToast
-    });
-    // remove timer
     if (!isEmpty(this.timer)) {
       this.removeTimers();
     }
+
+    this.setState({
+      showToast: !this.state.showToast
+    });
   }
 
   removeTimers() {
@@ -80,18 +79,17 @@ class Toast extends Component {
 
     return (
       <Wrapper>
-        <ToastWrapper
-          position={position}>
-          { icon
-            ? <ToastIcon
-                src={icon}
-                backgroundColor={backgroundColor}
-                borderRadius={borderRadius}
-                delay={delay}
-                pulse={this.state.pulse}
-                pulseInterval={pulseInterval}
-                onClick={this.handleClick} />
-            : null }
+        <ToastWrapper position={position}>
+          {icon &&
+            <ToastIcon
+              src={icon}
+              backgroundColor={backgroundColor}
+              borderRadius={borderRadius}
+              delay={delay}
+              pulse={this.state.pulse}
+              pulseInterval={pulseInterval}
+              onClick={this.handleClick}
+            />}
           <ToastMessage
             icon={icon}
             borderRadius={borderRadius}
@@ -101,14 +99,15 @@ class Toast extends Component {
             position={position}
             duration={duration}
             showToast={this.state.showToast}
-            onClick={this.handleClick} >
+            onClick={this.handleClick}
+          >
             {children}
           </ToastMessage>
         </ToastWrapper>
       </Wrapper>
     );
   }
-};
+}
 
 Toast.defaultProps = {
   mode: 'active',
