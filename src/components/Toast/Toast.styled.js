@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, {keyframes} from 'styled-components';
 
 const MAP_POSITION_TO_CSS = {
   'top-left': 'top: 0; left: 0;',
@@ -7,9 +7,40 @@ const MAP_POSITION_TO_CSS = {
   'bottom-right': 'bottom: 0; right: 0;'
 };
 
+const slideInFromLeft = keyframes`
+  0% {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+`;
+
+const slideInFromRight = keyframes`
+  0% {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+`;
+
+const pulse = keyframes`
+  0% { transform: scale3d(1, 1, 1) }
+  25% { transform: scale3d(1.1, 1.1, 1.1) }
+  50% { transform: scale3d(1, 1, 1) }
+  75% { transform: scale3d(1.1, 1.1, 1.1) }
+  100% { transform: scale3d(1, 1, 1) }
+`;
+
 export const Wrapper = styled.div`
   height: 300px;
   position: relative;
+  overflow: hidden;
 `
 
 export const ToastWrapper = styled.div`
@@ -22,6 +53,9 @@ export const ToastWrapper = styled.div`
   z-index: 9999999999;
   margin: 10px;
   box-sizing: border-box;
+
+  animation: ${props => isRight(props) ? slideInFromRight : slideInFromLeft} 1.5s forwards ease-in-out;
+  opacity: 0;
 `;
 
 export const ToastIcon = styled.img`
@@ -34,15 +68,7 @@ export const ToastIcon = styled.img`
   box-sizing: border-box;
 
   animation: ${props => getPulseAnimation(props)};
-  animation-delay: ${props => parseInt(props.delay - 800)}ms;
-
-  @keyframes pulse {
-    0% { transform: scale3d(1, 1, 1) }
-    25% { transform: scale3d(1.1, 1.1, 1.1) }
-    50% { transform: scale3d(1, 1, 1) }
-    75% { transform: scale3d(1.1, 1.1, 1.1) }
-    100% { transform: scale3d(1, 1, 1) }
-  }
+  animation-delay: ${props => parseInt(props.delay - 600)}ms;
 `;
 
 export const ToastMessage = styled.div`
@@ -61,7 +87,7 @@ export const ToastMessage = styled.div`
 
   opacity: ${props => props.showToast ? 1 : 0};
   transform: ${props => getTransformCssValues(props)};
-  transition: all 200ms ease-in-out;
+  transition: all 250ms ease-in-out;
 
   &:after {
     content: '';
@@ -80,7 +106,7 @@ export const ToastMessage = styled.div`
 `;
 
 function getCssFlexDirection(props) {
-  if (props.position.includes('right')) {
+  if (isRight(props)) {
     return 'row-reverse';
   }
   return 'row';
@@ -90,23 +116,31 @@ function getTransformCssValues(props) {
   if (props.showToast) {
     return 'translateX(0)';
   }
-  if (!props.showToast && props.position.includes('right')) {
+  if (!props.showToast && isRight(props)) {
     return 'translateX(100px)';
   }
-  if (!props.showToast && props.position.includes('left')) {
+  if (!props.showToast && isLeft(props)) {
     return 'translateX(-100px)';
   }
 }
 
 function getPulseAnimation(props) {
   if (props.pulse) {
-    return 'pulse 450ms forwards linear'
+    return `${pulse} 450ms forwards linear`;
   }
 }
 
 function getArrowCssValues(props) {
-  if (props.position.includes('right')) {
+  if (isRight(props)) {
     return 'right: -7px; transform: rotate(180deg)';
   }
   return 'left: -7px';
+}
+
+function isRight(props) {
+  return props.position.includes('right');
+}
+
+function isLeft(props) {
+  return props.position.includes('left');
 }
