@@ -83,7 +83,7 @@ class Toast extends Component {
         <ToastWrapper
           position={position}>
           { icon
-            ? <ToastIcon
+            && <ToastIcon
                 src={icon}
                 backgroundColor={backgroundColor}
                 borderRadius={borderRadius}
@@ -91,7 +91,7 @@ class Toast extends Component {
                 pulse={this.state.pulse}
                 pulseInterval={pulseInterval}
                 onClick={this.handleClick} />
-            : null }
+          }
           <ToastMessage
             icon={icon}
             borderRadius={borderRadius}

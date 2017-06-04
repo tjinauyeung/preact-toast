@@ -1,4 +1,4 @@
-import styled, {keyframes} from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 const MAP_POSITION_TO_CSS = {
   'top-left': 'top: 0; left: 0;',
@@ -41,7 +41,7 @@ export const Wrapper = styled.div`
   height: 300px;
   position: relative;
   overflow: hidden;
-`
+`;
 
 export const ToastWrapper = styled.div`
   position: absolute;
@@ -54,7 +54,10 @@ export const ToastWrapper = styled.div`
   margin: 10px;
   box-sizing: border-box;
 
-  animation: ${props => isRight(props) ? slideInFromRight : slideInFromLeft} 1.5s forwards ease-in-out;
+  animation: ${props =>
+    isRight(props)
+      ? slideInFromRight
+      : slideInFromLeft} 1.5s forwards ease-in-out;
   opacity: 0;
 `;
 
@@ -85,13 +88,13 @@ export const ToastMessage = styled.div`
   box-sizing: border-box;
   cursor: pointer;
 
-  opacity: ${props => props.showToast ? 1 : 0};
+  opacity: ${props => (props.showToast ? 1 : 0)};
   transform: ${props => getTransformCssValues(props)};
   transition: all 250ms ease-in-out;
 
   &:after {
     content: '';
-    display: ${props => props.icon ? 'block' : 'none' };
+    display: ${props => (props.icon ? 'block' : 'none')};
     width: 0;
     height: 0;
 
