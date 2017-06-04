@@ -1,11 +1,11 @@
 ## Example
     <Toast
         icon="src/components/Toast/Toast.icon.svg"
-        mode="active"
-        delay="2000"
-        duration="5000"
-        borderRadius="7"
-        position="bottom-left"
+        mode="passive"
+        delay="4000"
+        duration="6000"
+        borderRadius="5"
+        position="top-right"
         backgroundColor="#DB3678" >
         Vandaag al door 15 andere Lingerie Lovers bekeken.
     </Toast>
